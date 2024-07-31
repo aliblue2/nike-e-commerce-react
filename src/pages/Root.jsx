@@ -7,6 +7,7 @@ import {
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 import BottomNav from "../components/common/BottomNav";
+import { ToastContainer } from "react-toastify";
 import { useEffect } from "react";
 import LoadingPage from "./LoadingPage";
 import {
@@ -15,6 +16,8 @@ import {
   getExpireTime,
   updateToken,
 } from "../utils/Auth";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const Root = () => {
   const path = useLocation().pathname;
@@ -57,6 +60,7 @@ const Root = () => {
 
   return (
     <div className="bg-whiteColor">
+    <ToastContainer autoClose={3000} position="top-center" theme="colored" closeButton={true} rtl />
       <Header />
       <div className="max-w-[1200px] overflow-hidden mb-14 mx-auto md:p-5 text-blackColor">
         <Outlet />

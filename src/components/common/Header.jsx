@@ -6,7 +6,7 @@ import { Link, useLoaderData } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  const cartItemsCount = useSelector((state) => state.cart.length);
+  const cartItemsCount = useSelector((state) => state.cart.cart_items.length);
   const token = useLoaderData();
   return (
     <header className="bg-white">

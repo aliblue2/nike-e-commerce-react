@@ -19,7 +19,10 @@ const Profile = () => {
           <h4 className="text-xl font-medium text-accentColor">
             {emailAddress}
           </h4>
-          <button className="bg-red-100 font-medium text-sm p-2 rounded-lg text-red-500 flex items-center justify-center gap-2 hover:bg-red-500 hover:text-white transition-colors duration-300">
+          <button
+            className="bg-red-100 font-medium text-sm p-2 rounded-lg text-red-500 flex items-center justify-center gap-2 hover:bg-red-500 hover:text-white transition-colors duration-300"
+            onClick={() => submit(null, { action: "/logout", method: "post" })}
+          >
             خروج از حساب کاربری
             <FiLogOut size={24} />
           </button>

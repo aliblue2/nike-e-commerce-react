@@ -11,6 +11,7 @@ import Login from "../components/authPg/Login";
 import Signup from "../components/authPg/Signup";
 import { baseurl, client_id, client_secret } from "../App";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const Auth = () => {
   const token = useLoaderData();
@@ -114,13 +115,14 @@ export const action = async ({ request, params }) => {
   }
   const result = await response.json();
   if (result.message === "") {
+    toast.success("با موفقیت ثبت نام شدی!!");
     return redirect("/auth?mode=login");
   } else {
     const { access_token, refresh_token, expires_in } = result;
     localStorage.setItem("access_token", access_token);
     localStorage.setItem("refresh_token", refresh_token);
     localStorage.setItem("expires_in", expires_in);
-
+    toast.success("با موفقیت وارد شدی!");
     return redirect("/");
   }
 };

@@ -7,7 +7,7 @@ import { NavLink, useLoaderData } from "react-router-dom";
 
 const BottomNav = () => {
   const token = useLoaderData();
-  const cartItemsCount = useSelector((state) => state.cart.length);
+  const cartItemsCount = useSelector((state) => state.cart.cart_items.length);
 
   return (
     <nav className="w-full z-10 shadow-2xl shadow-primaryColor fixed left-0 bottom-0 flex items-center justify-between md:hidden bg-white py-2">
@@ -39,15 +39,15 @@ const BottomNav = () => {
         end
         className={({ isActive }) =>
           isActive
-            ? "flex relative w-3/12 flex-col items-center justify-center gap-1 text-accentColor font-medium text-sm"
-            : "flex relative w-3/12 flex-col items-center justify-center gap-1 text-gray-400 hover:text-accentColor hover:font-medium transition-colors duration-300 text-xs"
+            ? "flex relative w-3/12 group group-active flex-col items-center justify-center gap-1 text-accentColor font-medium text-sm"
+            : "flex relative w-3/12 group flex-col items-center justify-center gap-1 text-gray-400 hover:text-accentColor hover:font-medium transition-colors duration-300 text-xs"
         }
       >
         <FaShoppingBasket size={20} />
         سبد خرید
-        <span className="absolute top-0 left-5 font-medium ">
+        <NavLink to={"/cart"} className={({isActive}) => isActive ? "absolute top-0 left-5 text-xs bg-primaryColor w-4 text-whiteColor text-center rounded-full" : "absolute top-0 left-5 text-xs bg-gray-400 w-4 text-whiteColor text-center rounded-full"}>
           {cartItemsCount}
-        </span>
+        </NavLink>
       </NavLink>
       <NavLink
         to={token && token !== "EXPIERED" ? "/profile" : "/auth"}

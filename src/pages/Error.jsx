@@ -39,9 +39,11 @@ const Error = () => {
     );
   }
   return (
-    <div className="flex flex-col items-center justify-center gap-5 p-5 bg-gradient-to-b from-dividerColor to-white min-h-screen">
-      <Lottie animationData={animeSource} loop />
-      {content}
+    <div className="bg-gradient-to-b from-dividerColor to-white min-h-screen">
+      <div className="w-full md:max-w-[600px] mx-auto flex flex-col items-center justify-center gap-5 p-5 ">
+        <Lottie animationData={animeSource} loop />
+        {content}
+      </div>
     </div>
   );
 };

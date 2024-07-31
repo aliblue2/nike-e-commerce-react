@@ -4,15 +4,14 @@ import { baseurl } from "../App";
 import axios from "axios";
 import Comments from "../components/productDetailPg/Comments";
 import { useDispatch } from "react-redux";
-import { cartActions } from "../store/CartStore";
+import { addToCartDispatcher } from "../store/CartStoreApi";
 
 const ProductDetail = () => {
   const productData = useLocation().state;
   const comments = useLoaderData();
   const dispatch = useDispatch();
-
   const addTocartItem = (product) => {
-    dispatch(cartActions.addToCart(product));
+    dispatch(addToCartDispatcher(product));
   };
 
   return (

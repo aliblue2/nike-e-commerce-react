@@ -11,7 +11,7 @@ import { checkAuthToken, getAccessToken } from "./utils/Auth";
 import { Provider } from "react-redux";
 import store from "./store/Main";
 import Error from "./pages/Error";
-export const baseurl = "https://corsproxy.io/?http://expertdevelopers.ir/api/v1";
+export const baseurl = "/api/v1";
 export const client_secret = "kyj1c9sVcksqGU4scMX7nLDalkjp2WoqQEf8PKAC";
 export const client_id = 2;
 
