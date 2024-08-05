@@ -1,11 +1,10 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import { createPortal } from "react-dom";
-import { checkAuthToken, getAccessToken } from "../../utils/Auth";
-import axios from "axios";
+import { getAccessToken } from "../../utils/Auth";
 import { baseurl } from "../../App";
 import { toast } from "react-toastify";
 
-const CommentModal = forwardRef(function CommentModal({ productId }, ref) {
+const CommentModal = forwardRef(function CommentModal({ ...props }, ref) {
   const dialog = useRef();
   const title = useRef();
   const content = useRef();
