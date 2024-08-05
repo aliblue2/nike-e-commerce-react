@@ -51,7 +51,7 @@ const Auth = () => {
 
 export default Auth;
 
-export const action = async ({ request, params }) => {
+export const action = async ({ request }) => {
   const searchParams = new URL(request.url).searchParams;
   const mode = searchParams.get("mode") || "signup";
   let endpoint;

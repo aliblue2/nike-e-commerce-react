@@ -60,7 +60,7 @@ const Profile = () => {
           }
         >
           <FaTruck size={20} />
-          داشبورد
+          سوابق سفارش
         </NavLink>
         <NavLink
           to={"/account-setting"}

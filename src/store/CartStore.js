@@ -53,7 +53,6 @@ const cartStore = createSlice({
     },
 
     replaceCartItems(state, action) {
-      console.log(action.payload);
       state.cart_items = action.payload.cart_items;
       state.payable_price = action.payload.payable_price;
       state.shipping_cost = action.payload.shipping_cost;

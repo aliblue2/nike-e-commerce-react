@@ -19,6 +19,9 @@ const Home = lazy(() => import("./pages/Home"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const Products = lazy(() => import("./pages/Products"));
 const Auth = lazy(() => import("./pages/Auth"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const OrderStatus = lazy(() => import("./pages/OrderStatus"));
+const Orders = lazy(() => import("./pages/Orders"));
 
 const router = createBrowserRouter([
   {
@@ -100,6 +103,43 @@ const router = createBrowserRouter([
       {
         path: "support",
         element: <p>support</p>,
+      },
+      {
+        path: "checkout",
+        element: (
+          <Suspense fallback={<LoadingPage />}>
+            <Checkout />
+          </Suspense>
+        ),
+        action: (meta) =>
+          import("./pages/Checkout").then((module) => module.action(meta)),
+      },
+      {
+        path: "orders",
+        children: [
+          {
+            index: true,
+            loader: () =>
+              import("./pages/Orders").then((module) => module.loader()),
+            element: (
+              <Suspense fallback={<LoadingPage />}>
+                <Orders />
+              </Suspense>
+            ),
+          },
+          {
+            path: "status",
+            element: (
+              <Suspense fallback={<LoadingPage />}>
+                <OrderStatus />
+              </Suspense>
+            ),
+            loader: (meta) =>
+              import("./pages/OrderStatus").then((module) =>
+                module.loader(meta)
+              ),
+          },
+        ],
       },
     ],
   },

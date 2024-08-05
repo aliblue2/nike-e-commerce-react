@@ -1,82 +1,73 @@
-import { useState } from "react";
-import { FiUser } from "react-icons/fi";
-import SecondaryButton from "../common/SecondaryButton";
-import { Form } from "react-router-dom";
-import PrimaryButton from "../common/PrimaryButton";
+import { useCallback, useRef, useState } from "react";
+import { FiMessageSquare, FiUser } from "react-icons/fi";
 
+import CommentImage from "../../images/comment.png";
+import CommentModal from "./CommentModal";
+import SecondaryButton from "../common/SecondaryButton";
 const Comments = ({ comments }) => {
   const [count, setCount] = useState(5);
+  const modal = useRef();
+  const openModalHandler = useCallback(() => {
+    modal.current.open();
+  }, []);
   return (
-    <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 p-5">
-      <div className=" col-span-1 h-fit sticky top-0">
-        <Form className="flex flex-col w-full items-start justify-start gap-3 sticky top-0">
-          <label
-            htmlFor="titleForm"
-            className="text-primaryColor font-medium text-lg"
-          >
-            عنوان نظر
-          </label>
-          <input
-            type="text"
-            className="w-full rounded-lg bg-white border border-dividerColor focus:border-primaryColor p-2 focus:shadow-md focus:shadow-emerald-200 outline-none transition-all ease-in-out duration-300"
-            name="titleForm"
-            placeholder=" عنوان نظر شما "
+    <>
+      <CommentModal ref={modal} />
+      <section className="w-full relative grid grid-cols-1 md:grid-cols-3 gap-5 p-5">
+        <aside className="flex flex-col items-center justify-start gap-5">
+          <img
+            src={CommentImage}
+            alt="comment"
+            className="mix-blend-multiply"
           />
-          <label
-            htmlFor="captionForm"
-            className="text-primaryColor font-medium text-lg"
+          <button
+            onClick={openModalHandler}
+            className="bg-primaryColor rounded-lg p-2 text-white w-full font-medium text-lg flex items-center justify-center gap-5"
           >
-            توضیحات نظر
-          </label>
-          <textarea
-            className="w-full rounded-lg bg-white border border-dividerColor focus:border-primaryColor p-2 focus:shadow-md focus:shadow-emerald-200 outline-none transition-all ease-in-out duration-300"
-            name="captionForm"
-            rows={5}
-            placeholder=" توضیحات شما درباره محصول "
-          />
-          <PrimaryButton >
-            ثبت نظر
-          </PrimaryButton>
-        </Form>
-      </div>
-      <div className="md:col-span-2 col-span-1 w-full flex flex-col items-center justify-start gap-5">
-        {comments && comments.length > 0
-          ? comments.slice(0, count).map((comment) => {
-              return (
-                <div
-                  key={comment.id}
-                  className="p-3 bg-white w-full border border-dashed border-dividerColor flex flex-col items-start rounded-lg justify-around gap-2"
-                >
-                  <span className="flex items-center justify-start gap-2 text-sm text-primaryColor">
-                    <FiUser
-                      size={24}
-                      className="bg-primaryColor rounded-full text-whiteColor p-[1px]"
-                    />
-                    {comment.author.email}
-                  </span>
-                  <h6 className="font-medium text-lg">{comment.title}</h6>
-                  <span className="line-clamp-3 font-medium">
-                    {comment.content}
-                  </span>
-                  <span className="text-sm text-primaryColor">
-                    {comment.date}
-                  </span>
-                </div>
-              );
-            })
-          : ""}
-
-        {comments && count >= comments.length ? (
-          ""
-        ) : (
-          <SecondaryButton
-            onClick={() => setCount((prevCount) => (prevCount += 5))}
-          >
-            دیدن نظرات بیشتر{" "}
-          </SecondaryButton>
-        )}
-      </div>
-    </div>
+            افزودن نظر
+            <FiMessageSquare size={24} />
+          </button>
+        </aside>
+        <main className="w-full flex flex-col items-center justify-start gap-5 col-span-1 md:col-span-2">
+          {comments.length > 0
+            ? comments.slice(0, count).map((comment) => {
+                return (
+                  <div
+                    key={comment.id}
+                    className="bg-white overflow-hidden w-full shadow-md rounded-lg p-4 border-t-2 border-primaryColor"
+                  >
+                    <div className="flex w-full flex-col items-start justify-start gap-2">
+                      <div className="w-full flex items-center justify-between gap-5">
+                        <span className="text-accentColor text-sm flex items-center justify-center gap-2">
+                          <FiUser
+                            size={24}
+                            className="bg-primaryColor rounded-full p-[1px] text-whiteColor"
+                          />
+                          {comment.author.email}
+                        </span>
+                        <span className="text-accentColor text-sm">
+                          {comment.date}
+                        </span>
+                      </div>
+                      <h6 className="text-base font-medium">{comment.title}</h6>
+                      <p className="text-sm font-medium">{comment.content}</p>
+                    </div>
+                  </div>
+                );
+              })
+            : "هنوز نظری درباره این محصول ثبت نشده است.!"}
+          {count < comments.length ? (
+            <SecondaryButton
+              onClick={() => setCount((prevValue) => prevValue + 5)}
+            >
+              دیدن نظرات بیشتر
+            </SecondaryButton>
+          ) : (
+            ""
+          )}
+        </main>
+      </section>
+    </>
   );
 };
 

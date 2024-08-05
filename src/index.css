@@ -43,3 +43,13 @@ body {
   opacity: 0.4;
   background-image: url(./images/images.jpeg);
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #00897b;
+  border-radius: 15px;
+}

@@ -15,7 +15,7 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start gap-5 relative">
+    <div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <img
           src={productData.image}
@@ -50,7 +50,7 @@ const ProductDetail = () => {
 
           <button
             onClick={() => addTocartItem(productData)}
-            className="md:flex w-fit bg-gradient-to-r from-primaryColor to-green-500 hidden items-center justify-center gap-5 p-2 rounded-lg text-white hover:bg-accentColor transition-colors duration-300 "
+            className="md:flex w-fit bg-primaryColor hidden items-center justify-center gap-5 p-2 rounded-lg text-white hover:bg-accentColor transition-colors duration-300 "
           >
             افزودن به سبد خرید
             <FiShoppingBag size={24} />
@@ -59,7 +59,7 @@ const ProductDetail = () => {
       </div>
       <button
         onClick={() => addTocartItem(productData)}
-        className="md:hidden w-full bg-gradient-to-r from-primaryColor to-green-500  flex items-center justify-center gap-5 p-3  text-white hover:bg-accentColor transition-colors z-10 duration-300 fixed bottom-14 "
+        className="md:hidden w-full bg-primaryColor  flex items-center justify-center gap-5 p-3  text-white hover:bg-accentColor transition-colors z-10 duration-300 fixed bottom-14 "
       >
         افزودن به سبد خرید
         <span className="font-medium">
@@ -67,7 +67,7 @@ const ProductDetail = () => {
         </span>
         <FiShoppingBag size={24} />
       </button>
-      <h4 className="text-primaryColor font-medium text-2xl border-y-2 w-full text-center p-2 border-dividerColor my-5">
+      <h4 className="text-primaryColor font-medium text-2xl w-full text-center p-2 border-dividerColor my-5">
         نظرات کاربران
       </h4>
       <Comments comments={comments} />

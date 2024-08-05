@@ -9,26 +9,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import cartEmptyAnime from "../lottie/cartEmpty.json";
 import Lottie from "lottie-react";
-import { useEffect } from "react";
-import {
-  changeCount,
-  fetchCartData,
-  removeFromCartApi,
-} from "../store/CartStoreApi";
+import { changeCount, removeFromCartApi } from "../store/CartStoreApi";
 import { toast } from "react-toastify";
 
 const Cart = () => {
   const dispatcher = useDispatch();
 
-  useEffect(() => {
-    dispatcher(fetchCartData());
-  }, [dispatcher]);
-
   let payablePrice = useSelector((state) => state.cart.payable_price);
-  console.log(payablePrice);
+  let totalPrice = useSelector((state) => state.cart.total_price);
+  let shippingPrice = useSelector((state) => state.cart.shipping_cost);
   let totalDiscount = 0;
   let cartItems = useSelector((state) => state.cart.cart_items);
-  console.log(cartItems);
 
   const increaseQunatity = (cartItemId, count) => {
     count++;
@@ -54,7 +45,7 @@ const Cart = () => {
           loop={true}
           className="w-9/12 p-5"
         />
-        <h6 className="text-accentColor font-medium text-lg">
+        <h6 className="text-accentColor font-medium text-base">
           سبد خرید شما خالی است!.
         </h6>
         <Link
@@ -69,18 +60,18 @@ const Cart = () => {
   }
 
   return (
-    <div className="flex w-full md:max-w-[600px] mx-auto flex-col items-center justify-start gap-5 p-5">
+    <div className="flex w-full md:max-w-[600px] mx-auto flex-col items-center justify-start gap-3 p-5">
       {cartItems.map((cartItem) => {
         totalDiscount += cartItem.product.discount * cartItem.count;
         return (
           <div
-            className="flex items-center justify-start h-32 overflow-hidden rounded-lg border border-primaryColor w-full shadow-md shadow-green-100"
+            className="flex items-center justify-start h-32 overflow-hidden rounded-lg w-full border"
             key={cartItem.cart_item_id}
           >
             <img
               src={cartItem.product.image}
               alt={cartItem.product.title}
-              className="mix-blend-multiply border-l border-dividerColor w-28 h-full"
+              className="mix-blend-multiply border-l w-28 h-full"
             />
             <div className="w-full bg-white h-full flex flex-col items-start justify-around gap-2 p-2">
               <h5 className="font-medium text-sm md:text-base md:line-clamp-2 line-clamp-1">
@@ -110,9 +101,9 @@ const Cart = () => {
                     }
                   />
                 </div>
-                <button className="bg-red-100 text-red-500 rounded-md p-[3px]">
+                <button className="bg-red-100 w-7 h-7 text-red-500 rounded-md p-[3px]">
                   <FiTrash2
-                    size={18}
+                    size={20}
                     onClick={() => removeFromCart(cartItem.cart_item_id)}
                   />
                 </button>
@@ -121,13 +112,25 @@ const Cart = () => {
           </div>
         );
       })}
-      <h6 className="text-blue-500 font-medium text-lg flex items-center justify-start gap-1 w-full text-start">
-        {totalDiscount.toLocaleString("fa-IR") + " تخفیف"}
-        <FiPercent size={20} />
-      </h6>
-      <h3 className="text-accentColor text-start w-full font-medium text-2xl">
-        {payablePrice.toLocaleString("fa-IR") + " تومان"}
-      </h3>
+      <span className="w-full">جزئیات خرید</span>
+      <div className="bg-white shadow-md rounded-lg flex flex-col items-center justify-start gap-3 w-full p-3 divide-y-[3px] divide-dashed">
+        <h3 className="text-accentColor text-start w-full font-medium flex items-center justify-between gap-2">
+          <span className="text-blackColor text-sm">هزینه ارسال: </span>
+          {shippingPrice.toLocaleString("fa-IR") + " تومان"}
+        </h3>
+        <h3 className="text-accentColor text-start w-full font-medium flex items-center justify-between gap-2">
+          <span className="text-blackColor text-sm">مبلغ کل خرید: </span>
+          {totalPrice.toLocaleString("fa-IR") + " تومان"}
+        </h3>
+        <h3 className="text-accentColor text-start w-full font-medium flex items-center justify-between gap-2">
+          <span className="text-blackColor text-sm">تخفیف نهایی: </span>
+          {totalDiscount.toLocaleString("fa-IR") + " تومان"}
+        </h3>
+        <h3 className="text-accentColor text-start w-full font-medium flex items-center justify-between gap-2">
+          <span className="text-blackColor text-sm">مبلغ قابل پرداخت : </span>
+          {payablePrice.toLocaleString("fa-IR") + " تومان"}
+        </h3>
+      </div>
       <div className="w-full flex items-center justify-center gap-2 my-2">
         <Link
           to={"/products"}
@@ -136,7 +139,7 @@ const Cart = () => {
           ادامه خرید
         </Link>
         <Link
-          to={""}
+          to={"/checkout"}
           className="bg-primaryColor rounded-lg hover:bg-accentColor text-whiteColor font-medium p-2 w-full text-center "
         >
           تکمیل سفارش

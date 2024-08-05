@@ -8,6 +8,11 @@ export const addToCartDispatcher = (product) => {
   return async (dispatcher) => {
     const data = { product_id: product.id };
     const token = getAccessToken();
+    if (!token || token === "EXPIERED") {
+      toast.error("برای اضافه کردن محصول وارد شوید.");
+      return redirect("/auth?mode=login");
+    }
+
     const response = await fetch(baseurl + "/cart/add", {
       headers: {
         Accept: "*/*",
@@ -54,6 +59,9 @@ export const addToCartDispatcher = (product) => {
 export const fetchCartData = () => {
   return async (dispatcher) => {
     const token = getAccessToken();
+    if (!token || token === "EXPIERED") {
+      return null;
+    }
     const response = await fetch(baseurl + "/cart/list", {
       headers: {
         Accept: "*/*",
